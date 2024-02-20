@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Made by Samuel PAGES 
+# 20/02/2024
+
 """Entry point."""
 
 import argparse
