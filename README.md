@@ -1,5 +1,5 @@
 # Port Scanner using Scapy
 
 ```
-pip 
+pip install -r requirements.txt 
 ```
