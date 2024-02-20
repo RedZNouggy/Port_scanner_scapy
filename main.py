@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Made by Samuel PAGES 
-# 20/02/2024
-
 """Entry point."""
 
 import argparse
 import sys
 from scapy.all import *
-from my_colors import infotext, errortext
+from my_colors import infotext, errortext, successtext
+from tqdm import tqdm
 from scapy_modules import syn_scan
 
 # Parameters
@@ -76,8 +74,20 @@ def main(target_ip, input_file, verbose):
     if verbose:
         infotext(f"Starting scan on the IP : {target_ip}")
     
-    for single_port in port_list:
-        syn_scan(target_ip, single_port, verbose)
+    opened_ports = []
+    closed_ports = []
+    for single_port in tqdm(port_list, colour="blue"):
+        is_opened = syn_scan(target_ip, single_port, verbose)
+        if is_opened is True:
+            opened_ports.append(single_port)
+        if is_opened is False:
+            closed_ports.append(single_port)
+
+    infotext("Summary : ")
+    for ports in opened_ports:
+        successtext(f"Opened port : {ports}")
+    for ports in closed_ports:
+        errortext(f"Closed port : {ports}")
 
 if __name__ == "__main__":
     main(args.target_ip, args.input_file, args.verbose)
