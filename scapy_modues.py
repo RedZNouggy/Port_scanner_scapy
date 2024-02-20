@@ -28,10 +28,12 @@ def syn_scan(target_ip, port, verb):
         if response.haslayer(TCP) and response[TCP].flags & 0x12:
             if verb:
                 successtext(f"Port {port} is open on {target_ip}")
+            return True
         else:
             if verb:
                 errortext(f"Port {port} is closed on {target_ip}")
+            return False
     else:
         if verb:
             errortext(f"No response received for port {port} on {target_ip}")
-
+        return False
